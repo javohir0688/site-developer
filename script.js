@@ -1,25 +1,30 @@
-<script>
-  const thankBtn = document.getElementById('thankBtn');
-  const helpBtn = document.getElementById('helpBtn');
-  const messageForm = document.getElementById('messageForm');
-  const contactLinks = document.getElementById('contactLinks');
-  const sendBtn = document.getElementById('sendBtn');
-  const userMessage = document.getElementById('userMessage');
-  const userName = document.getElementById('userName');
-  const userContact = document.getElementById('userContact');
-  const response = document.getElementById('response');
-  const messagesDisplay = document.getElementById('messagesDisplay');
-  const messagesList = document.getElementById('messagesList');
-
-  // Array to store messages
-  let messages = [];
-
-  thankBtn.addEventListener('click', () => {
-    messageForm.style.display = 'block';
-    contactLinks.style.display = 'none';
-    response.style.display = 'none';
+setTimeout(() => {
+  messages.push({
+    text: "Salom! Bu test xabari. Sayt juda chiroyli bo'libdi!",
+    senderName: "Javohir",
+    senderContact: "998901234567",
+    timestamp: new Date(Date.now() - 120000).toLocaleString('uz-UZ', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit'
+    }),
+    id: Date.now() - 120000
   });
+  
+  messages.push({
+    text: "Rahmat, juda yoqdi!",
+    senderName: "Anora",
+    senderContact: "anora@email.com",
+    timestamp: new Date(Date.now() - 60000).toLocaleString('uz-UZ', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit'
+    }),
+    id: Date.now() - 60000
+  });
+}, 1000);
 
-  helpBtn.addEventListener('click', () => {
-    contactLinks.style.display = 'block';
-    messageForm.style.display =
