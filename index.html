@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Og'iloyimga</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background-attachment: fixed;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Animated background elements */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(255, 111, 97, 0.3) 0%, transparent 50%),
+                  radial-gradient(circle at 40% 40%, rgba(246, 211, 101, 0.3) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 40px;
+      border-radius: 25px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.1);
+      max-width: 800px;
+      width: 100%;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.2);
+      animation: containerFadeIn 0.8s ease-out;
+    }
+
+    @keyframes containerFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      font-size: 2.8rem;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 2px;
+    }
+
+    .media-gallery {
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      color: #4a5568;
+      margin-bottom: 25px;
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    .videos, .images {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .placeholder-media {
+      background: linear-gradient(135deg, #ff6f61 0%, #fda085 100%);
+      height: 220px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 10px 30px rgba(255, 111, 97, 0.3);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .placeholder-media::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .placeholder-media:hover::before {
+      left: 100%;
+    }
+
+    .placeholder-media:hover {
+      transform: translateY(-10px) scale(1.05);
+      box-shadow: 0 20px 40px rgba(255, 111, 97, 0.4);
+    }
+
+    .buttons {
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 15px 35px;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      overflow: hidden;
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    button:hover::before {
+      left: 100%;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
+      background: linear-gradient(135deg, #764ba2, #667eea);
+    }
+
+    button:active {
+      transform: translateY(-1px);
+    }
+
+    #messageForm, #contactLinks {
+      margin-top: 25px;
+      background: rgba(102, 126, 234, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      border-radius: 20px;
+      border: 1px solid rgba(102, 126, 234, 0.2);
+      animation: slideIn 0.5s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h3 {
+      color: #4a5568;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+
+    #userMessage {
+      width: 100%;
+      padding: 15px;
+      font-size: 1rem;
+      border-radius: 15px;
+      border: 2px solid rgba(102, 126, 234, 0.2);
+      resize: vertical;
+      background: rgba(255, 255, 255, 0.9);
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    #userMessage:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+      background: white;
+    }
+
+    #response {
+      margin-top: 20px;
+      font-weight: 600;
+      color: #10b981;
+      background: rgba(16, 185, 129, 0.1);
+      padding: 15px;
+      border-radius: 15px;
+      border-left: 4px solid #10b981;
+      animation: responseShow 0.5s ease-out;
+    }
+
+    @keyframes responseShow {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 25px;
+      background: rgba(102, 126, 234, 0.1);
+      margin: 8px;
+      display: inline-block;
+      transition: all 0.3s ease;
+      border: 2px solid rgba(102, 126, 234, 0.2);
+    }
+
+    a:hover {
+      background: #667eea;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    /* Message display area */
+    .messages-display {
+      margin-top: 30px;
+      max-height: 300px;
+      overflow-y: auto;
+      background: rgba(248, 250, 252, 0.8);
+      border-radius: 15px;
+      padding: 20px;
+      border: 1px solid rgba(102, 126, 234, 0.1);
+    }
+
+    .message-item {
+      background: white;
+      margin-bottom: 15px;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-left: 4px solid #667eea;
+      animation: messageAppear 0.5s ease-out;
+      position: relative;
+    }
+
+    .message-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+    }
+
+    .message-sender {
+      font-weight: bold;
+      color: #667eea;
+      font-size: 1.1rem;
+    }
+
+    .message-contact {
+      font-size: 0.85rem;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+
+    .message-time {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      background: rgba(102, 126, 234, 0.1);
+      padding: 4px 8px;
+      border-radius: 8px;
+    }
+
+    .message-text {
+      color: #374151;
+      line-height: 1.5;
+      margin-top: 8px;
+      font-size: 1rem;
+    }
+
+    .message-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      font-size: 0.75rem;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-weight: bold;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    @keyframes messageAppear {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #667eea !important;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+      background: white !important;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .container {
+        margin: 10px;
+        padding: 25px;
+      }
+      
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      .videos, .images {
+        grid-template-columns: 1fr;
+      }
+      
+      button {
+        padding: 12px 25px;
+        font-size: 1rem;
+      }
+      
+      .buttons {
+        gap: 15px;
+      }
+    }
+
+    /* Loading animation */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(102, 126, 234, 0.3);
+      border-radius: 50%;
+      border-top-color: #667eea;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Og'iloyimga</h1>
+    <div class="media-gallery">
+      <h2>Videolar</h2>
+      <div class="videos">
+        <div class="placeholder-media">
+          Video 1
+          <br><small>video/video1.mp4</small>
+        </div>
+        <div class="placeholder-media">
+          Video 2
+          <br><small>video/video2.mp4</small>
+        </div>
+      </div>
+      <h2>Rasmlar</h2>
+      <div class="images">
+        <div class="placeholder-media">
+          Rasm 1
+          <br><small>images/photo1.jpg</small>
+        </div>
+        <div class="placeholder-media">
+          Rasm 2
+          <br><small>images/photo2.jpg</small>
+        </div>
+      </div>
+    </div>
+    <div class="buttons">
+      <button id="thankBtn">Rahmat</button>
+      <button id="helpBtn">Help</button>
+    </div>
+    <div id="messageForm" style="display:none;">
+      <h3>Xabar Yuborish</h3>
+      <div style="margin-bottom: 15px;">
+        <input type="text" id="userName" placeholder="Ismingizni kiriting..." style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid rgba(102, 126, 234, 0.2); font-size: 1rem; margin-bottom: 10px; background: rgba(255, 255, 255, 0.9); transition: all 0.3s ease;">
+        <input type="text" id="userContact" placeholder="Telefon yoki email (ixtiyoriy)" style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid rgba(102, 126, 234, 0.2); font-size: 1rem; background: rgba(255, 255, 255, 0.9); transition: all 0.3s ease;">
+      </div>
+      <textarea id="userMessage" rows="4" placeholder="Xabaringizni yozing..."></textarea><br /><br />
+      <button id="sendBtn">Yuborish</button>
+    </div>
+    <div id="contactLinks" style="display:none;">
+      <h3>Biz bilan bog'laning:</h3>
+      <a href="https://t.me/javohir206" target="_blank">📱 Telegram</a>
+      <a href="https://instagram.com/your_instagram" target="_blank">📷 Instagram</a>
+    </div>
+    <div id="response" style="display:none;"></div>
+    <div id="messagesDisplay" class="messages-display" style="display:none;">
+      <h3>📨 Kelgan xabarlar:</h3>
+      <div id="messagesList"></div>
+    </div>
+  </div>
+
+  <script>
+    const thankBtn = document.getElementById('thankBtn');
+    const helpBtn = document.getElementById('helpBtn');
+    const messageForm = document.getElementById('messageForm');
+    const contactLinks = document.getElementById('contactLinks');
+    const sendBtn = document.getElementById('sendBtn');
+    const userMessage = document.getElementById('userMessage');
+    const userName = document.getElementById('userName');
+    const userContact = document.getElementById('userContact');
+    const response = document.getElementById('response');
+    const messagesDisplay = document.getElementById('messagesDisplay');
+    const messagesList = document.getElementById('messagesList');
+
+    // Array to store messages
+    let messages = [];
+
+    thankBtn.addEventListener('click', () => {
+      messageForm.style.display = 'block';
+      contactLinks.style.display = 'none';
+      response.style.display = 'none';
+    });
+
+    helpBtn.addEventListener('click', () => {
+      contactLinks.style.display = 'block';
+      messageForm.style.display = 'none';
+      response.style.display = 'none';
+      
+      // Show messages if there are any
+      if (messages.length > 0) {
+        messagesDisplay.style.display = 'block';
+        displayMessages();
+      }
+    });
+
+    sendBtn.addEventListener('click', () => {
+      const msg = userMessage.value.trim();
+      const name = userName.value.trim();
+      
+      if (msg === '') {
+        showCustomAlert('Iltimos, xabar yozing.', 'warning');
+        return;
+      }
+      
+      if (name === '') {
+        showCustomAlert('Iltimos, ismingizni kiriting.', 'warning');
+        return;
+      }
+      
+      const contact = userContact.value.trim();
+      sendMessage(msg, name, contact);
+    });
+
+    function sendMessage(msg, name, contact) {
+      // Show loading
+      sendBtn.innerHTML = '<span class="loading"></span> Yuborilmoqda...';
+      sendBtn.disabled = true;
+      
+      // Simulate sending delay
+      setTimeout(() => {
+        // Add message to array with timestamp and sender info
+        const newMessage = {
+          text: msg,
+          senderName: name,
+          senderContact: contact,
+          timestamp: new Date().toLocaleString('uz-UZ', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+          }),
+          id: Date.now()
+        };
+        
+        messages.unshift(newMessage); // Add to beginning of array
+        
+        // Show success message
+        response.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 10px; justify-content: center;">
+            <div style="font-size: 24px;">✅</div>
+            <div>
+              <div style="font-weight: bold; color: #10b981;">Xabar muvaffaqiyatli yuborildi!</div>
+              <div style="font-size: 0.9rem; color: #6b7280; margin-top: 4px;">
+                <strong>${name}</strong>dan: "${msg}" - ${newMessage.timestamp}
+              </div>
+            </div>
+          </div>
+        `;
+        response.style.display = 'block';
+        
+        // Clear form and hide it
+        userMessage.value = '';
+        userName.value = '';
+        userContact.value = '';
+        messageForm.style.display = 'none';
+        
+        // Reset button
+        sendBtn.innerHTML = 'Yuborish';
+        sendBtn.disabled = false;
+        
+        // Show notification
+        showNotification(`💌 ${name}dan yangi xabar keldi!`);
+        
+        // Auto hide success message after 4 seconds
+        setTimeout(() => {
+          response.style.display = 'none';
+        }, 4000);
+        
+      }, 1000);
+    }
+
+    function displayMessages() {
+      messagesList.innerHTML = '';
+      
+      if (messages.length === 0) {
+        messagesList.innerHTML = '<p style="color: #6b7280; text-align: center; padding: 20px;">Hozircha xabarlar yo\'q</p>';
+        return;
+      }
+      
+      messages.forEach((message, index) => {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message-item';
+        
+        const isNew = index < 3; // Mark first 3 messages as new
+        
+        messageDiv.innerHTML = `
+          ${isNew ? '<div class="message-badge">YANGI</div>' : ''}
+          <div class="message-header">
+            <div>
+              <div class="message-sender">👤 ${message.senderName}</div>
+              ${message.senderContact ? `<div class="message-contact">📞 ${message.senderContact}</div>` : ''}
+            </div>
+            <div class="message-time">🕒 ${message.timestamp}</div>
+          </div>
+          <div class="message-text">💬 ${message.text}</div>
+        `;
+        messagesList.appendChild(messageDiv);
+      });
+    }
+
+    function showCustomAlert(message, type = 'info') {
+      const alertDiv = document.createElement('div');
+      alertDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'warning' ? 'linear-gradient(135deg, #fbbf24, #f59e0b)' : 'linear-gradient(135deg, #667eea, #764ba2)'};
+        color: white;
+        padding: 15px 25px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        z-index: 1000;
+        font-weight: 600;
+        animation: slideInRight 0.3s ease-out;
+        max-width: 300px;
+      `;
+      
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes slideInRight {
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOutRight {
+          from { transform: translateX(0); opacity: 1; }
+          to { transform: translateX(100%); opacity: 0; }
+        }
+      `;
+      document.head.appendChild(style);
+      
+      alertDiv.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 20px;">${type === 'warning' ? '⚠️' : 'ℹ️'}</span>
+          <span>${message}</span>
+        </div>
+      `;
+      
+      document.body.appendChild(alertDiv);
+      
+      setTimeout(() => {
+        alertDiv.style.animation = 'slideOutRight 0.3s ease-in forwards';
+        setTimeout(() => alertDiv.remove(), 300);
+      }, 3000);
+    }
+
+    function showNotification(message) {
+      const notification = document.createElement('div');
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        padding: 15px 30px;
+        border-radius: 25px;
+        box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+        z-index: 1000;
+        font-weight: 600;
+        animation: notificationBounce 0.5s ease-out;
+      `;
+      
+      const bounceStyle = document.createElement('style');
+      bounceStyle.textContent = `
+        @keyframes notificationBounce {
+          0% { transform: translateX(-50%) translateY(-100px) scale(0.8); opacity: 0; }
+          60% { transform: translateX(-50%) translateY(5px) scale(1.05); opacity: 1; }
+          100% { transform: translateX(-50%) translateY(0) scale(1); opacity: 1; }
+        }
+        @keyframes notificationFadeOut {
+          from { transform: translateX(-50%) scale(1); opacity: 1; }
+          to { transform: translateX(-50%) scale(0.8); opacity: 0; }
+        }
+      `;
+      document.head.appendChild(bounceStyle);
+      
+      notification.innerHTML = message;
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.animation = 'notificationFadeOut 0.3s ease-in forwards';
+        setTimeout(() => notification.remove(), 300);
+      }, 2000);
+    }
+
+    // Add enter key support for message textarea
+    userMessage.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && e.ctrlKey) {
+        sendBtn.click();
+      }
+    });
+
+    // Add some initial demo messages for testing (remove in production)
+    setTimeout(() => {
+      messages.push({
+        text: "Salom! Bu test xabari. Sayt juda chiroyli bo'libdi!",
+        senderName: "Javohir",
+        senderContact: "998901234567",
+        timestamp: new Date(Date.now() - 120000).toLocaleString('uz-UZ', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit'
+        }),
+        id: Date.now() - 120000
+      });
+      
+      messages.push({
+        text: "Rahmat, juda yoqdi!",
+        senderName: "Anora",
+        senderContact: "anora@email.com",
+        timestamp: new Date(Date.now() - 60000).toLocaleString('uz-UZ', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit'
+        }),
+        id: Date.now() - 60000
+      });
+    }, 1000);
+  </script>
+</body>
+</html>
